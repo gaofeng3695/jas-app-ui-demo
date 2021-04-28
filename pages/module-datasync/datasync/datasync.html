@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<body>
+  <div class="_outer-wrapper " v-cloak>
+    <jas-header left-icon="mintui mintui-back" @clickleft="goback" title="数据同步"></jas-header>
+    <div v-setheight>
+      <div class="mr10 ml10 mt10 of-h" style="border-radius: 10px;">
+        <jas-open-panel v-model="open" title="基础数据">
+          <div v-for="item in dataStatus" style="display: flex;" class=" topLine ml10 mr10">
+            <div style="flex: 1;" class="lh16 pt6 pb6">
+              <div class="fs14">{{item.class}}</div>
+              <div class="fs12 grey4_clr" style="display: flex;">
+                <div style="flex: 1;">新增 <span :class="item.add>0?'error_color1_clr':''">{{item.add}}</span> 条</div>
+                <div style="flex: 1;">修改 <span :class="item.update>0?'error_color1_clr':''">{{item.update}}</span> 条
+                </div>
+                <div style="flex: 1;">删除 <span :class="item.delete>0?'error_color1_clr':''">{{item.delete}}</span> 条
+                </div>
+              </div>
+              <div class="fs12 grey4_clr">{{'最后更新时间 ' + item.lastTime}}</div>
+
+            </div>
+            <div style="line-height: 72px;" class="pr10 pl10">
+              <i @click="syncdata" v-show="item.add+item.update+item.delete>0"
+                class="fs18 theme_normal_color1_clr  fa fa-refresh"></i>
+              <i @click="syncnodata" v-show="item.add+item.update+item.delete==0"
+                class="fs18 grey6_clr  fa fa-refresh"></i>
+            </div>
+          </div>
+        </jas-open-panel>
+      </div>
+      <div class="mr10 ml10 mt10 of-h" style="border-radius: 10px;">
+        <jas-open-panel v-model="open2" title="业务数据">
+          <div v-for="item in dataStatus" style="display: flex;" class=" topLine ml10 mr10">
+            <div style="flex: 1;" class="lh16 pt6 pb6">
+              <div class="fs14">{{item.class}}</div>
+              <div class="fs12 grey4_clr" style="display: flex;">
+                <div style="flex: 1;">新增 <span :class="item.add>0?'error_color1_clr':''">{{item.add}}</span> 条</div>
+                <div style="flex: 1;">修改 <span :class="item.update>0?'error_color1_clr':''">{{item.update}}</span> 条
+                </div>
+                <div style="flex: 1;">删除 <span :class="item.delete>0?'error_color1_clr':''">{{item.delete}}</span> 条
+                </div>
+              </div>
+              <div class="fs12 grey4_clr">{{'最后更新时间 ' + item.lastTime}}</div>
+
+            </div>
+            <div style="line-height: 72px;" class="pr10 pl10">
+              <i @click="syncdata" v-show="item.add+item.update+item.delete>0"
+                class="fs18 theme_normal_color1_clr  fa fa-refresh"></i>
+              <i @click="syncnodata" v-show="item.add+item.update+item.delete==0"
+                class="fs18 grey6_clr  fa fa-refresh"></i>
+            </div>
+          </div>
+        </jas-open-panel>
+      </div>
+    </div>
+    <jas-button-footer @click="clickbtn" :is-return="false" :buttons="['同步基础','同步业务','同步全部']" :buttons-color="[]">
+    </jas-button-footer>
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-moudle-boxes.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script src="./../../../common/components/jas-open-panel.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        open: true,
+        open2: false,
+        userbg: {
+          background: 'url(../../../common/images/man.png) no-repeat center center',
+          backgroundSize: 'cover'
+        },
+        userObj: {
+          name: '王九九',
+          from: '西南管道公司兰成渝输油站',
+          group: '巡线一组 管道工'
+        },
+        dataStatus: [{
+            class: '阈值基础数据',
+            add: 99,
+            update: 99,
+            delete: 99,
+            lastTime: '2020-03-18 17:30:20'
+          },
+          {
+            class: '管线基础数据',
+            add: 0,
+            update: 0,
+            delete: 0,
+            lastTime: '2020-03-18 17:30:20'
+          },
+          {
+            class: '桩基础数据',
+            add: 0,
+            update: 10,
+            delete: 0,
+            lastTime: '2020-03-18 17:30:20'
+          },
+        ],
+      }
+    },
+    watch: {
+      open: function () {
+        this.open && (this.open2 = false);
+        !this.open && (this.open2 = true);
+      },
+      open2: function () {
+        this.open2 && (this.open = false);
+        !this.open2 && (this.open = true);
+      },
+
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+      appcan.ready(function () {
+        that.monitorCheckOut();
+      });
+    },
+    methods: {
+      goback: function () {
+        var that = this;
+        if (this.issync) {
+          that.$messagebox({
+            title: '提示',
+            message: '当前页面正在同步数据，离开会中断同步?',
+            confirmButtonText: '继续同步',
+            cancelButtonText: '离开',
+            showCancelButton: true
+          }).then(function (type) { //{ value, action }
+            if (type == 'confirm') {} else {
+              window.appcan && appcan.window.close();
+            }
+          });
+        } else {
+          window.appcan && appcan.window.close();
+        }
+
+      },
+      monitorCheckOut: function () { //退出应用
+        //监听手机物理返回键
+        var that = this;
+        appcan.window.monitorKey(0, 1, function (id) { // id:要拦截的键值id,0-返回键，1-菜单键 ;enable:是否拦截,0-不拦截，1-拦截
+          that.goback()
+        });
+      },
+      clickbtn: function (item) {
+        this.mytoast = this.$toast('您点击了' + item);
+      },
+      syncnodata: function (item) {
+        this.mytoast = this.$toast('已是最新数据，无需同步');
+      },
+      syncdata: function (item) {
+        var that = this;
+        this.mytoast && this.mytoast.close()
+        this.issync = true;
+        this.$indicator.open({
+          text: '正在同步数据...',
+          spinnerType: 'fading-circle'
+        });
+
+        setTimeout(function () {
+          that.issync = false;
+          that.$indicator.close()
+        }, 3000);
+
+      },
+    },
+  });
+</script>
+
+</html>

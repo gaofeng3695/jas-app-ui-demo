@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper bgfff of-h" v-cloak>
+
+
+    <jas-header title="服务器设置" isReturn></jas-header>
+
+    <div class="pl10 pr10 pt10">
+
+      <jas-select-field field="location1" :options="options" placeholder="请选择协议类型" label="协议类型"
+        v-model="form.protocolConfig">
+      </jas-select-field>
+
+      <mt-field label="ip地址" placeholder="请输入ip地址" type="text" v-model="form.host"></mt-field>
+      <mt-field label="端口" placeholder="请输入端口号" type="number" v-model="form.portConfig"></mt-field>
+
+    </div>
+
+    <div class="pt10 ta-c grey3_clr">
+      <div>您的服务器地址是： {{serverURL}}
+      </div>
+    </div>
+
+
+    <div class="mt20 pr10 pl10">
+      <mt-button @click="confirm" type="primary" size="large" style="border-radius: 20px;">确定</mt-button>
+    </div>
+
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script>
+  var vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        form: {
+          protocolConfig: jasTools.ajax.protocolConfig,
+          host: jasTools.ajax.host,
+          portConfig: jasTools.ajax.portConfig,
+        },
+        options: [{
+            label: 'http://',
+            value: 'http://',
+          },
+          {
+            label: 'https://',
+            value: 'https://',
+          },
+        ],
+      }
+    },
+    computed: {
+      serverURL: function () {
+        return this.form.protocolConfig + this.form.host + (this.form.portConfig ? ':' : '') + this.form
+          .portConfig +
+          '/';
+      }
+    },
+    created: function () {},
+    mounted: function () {},
+    methods: {
+      confirm: function () {
+        var that = this;
+        appcan.locStorage.setVal('serverProtocol', this.form.protocolConfig);
+        appcan.locStorage.setVal('serverIP', this.form.host);
+        appcan.locStorage.setVal('serverPort', this.form.portConfig);
+        that.$toast('修改成功');
+      },
+    },
+  });
+</script>
+
+</html>

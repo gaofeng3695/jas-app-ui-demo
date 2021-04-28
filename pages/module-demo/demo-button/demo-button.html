@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper of-h " v-cloak>
+    <jas-header title="按钮"></jas-header>
+
+    <div v-setHeight>
+
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="按钮种类"></jas-group-header>
+        <div class=" pl10 pr10 pb10">
+          <mt-button type="primary" style="background: #f90;">自定义颜色</mt-button>
+          <mt-button type="default">default</mt-button>
+          <mt-button type="primary">primary</mt-button>
+          <mt-button type="danger">danger</mt-button>
+        </div>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="按钮大小"></jas-group-header>
+        <div class=" pl10 pr10 pb10">
+          <mt-button type="primary" size="small" style="height: 24px;font-size: 12px;">自定义大小</mt-button>
+          <mt-button type="primary" size="small">small</mt-button>
+          <mt-button type="primary" size="normal">normal</mt-button>
+          <div class="mt10">
+            <mt-button type="primary" size="large">large</mt-button>
+          </div>
+        </div>
+
+      </div>
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="自定义形状"></jas-group-header>
+        <div class=" pl10 pr10 pb10">
+          <mt-button type="primary" style="border-radius: 14px;">小圆角</mt-button>
+          <mt-button type="primary" style="border-radius: 20px;">大圆角</mt-button>
+        </div>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="禁用"></jas-group-header>
+        <div class=" pl10 pr10 pb10">
+          <mt-button type="primary" disabled>disabled</mt-button>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+
+      }
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+      clickbtn: function (e) {
+        this.$toast(e)
+      },
+    },
+  });
+</script>
+
+</html>

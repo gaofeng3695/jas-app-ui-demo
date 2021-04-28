@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper " v-cloak>
+
+    <!-- 头部轮播图模块 -->
+    <div style="height: 150px;">
+      <mt-swipe :auto="4000">
+        <mt-swipe-item>
+          <div
+            style="height: 100%;background: url(../../../common/images/m1.png) no-repeat center center;background-size: cover;">
+          </div>
+        </mt-swipe-item>
+        <mt-swipe-item>
+          <div
+            style="height: 100%;background: url(../../../common/images/m2.png) no-repeat center center;background-size: cover;">
+          </div>
+        </mt-swipe-item>
+        <mt-swipe-item>
+          <div
+            style="height: 100%;background: url(../../../common/images/m3.png) no-repeat center center;background-size: cover;">
+          </div>
+        </mt-swipe-item>
+        <mt-swipe-item>
+          <div
+            style="height: 100%;background: url(../../../common/images/m5.png) no-repeat center center;background-size: cover;">
+          </div>
+        </mt-swipe-item>
+      </mt-swipe>
+    </div>
+
+    <!-- <div class="pt10 pr10 pb10 pl10">
+    </div> -->
+
+    <div class="of-h">
+      <div class="">
+        <jas-moudle-boxes :moudles="moudles" :colnumber="4" @clickitem="clickitem"></jas-moudle-boxes>
+      </div>
+
+      <div class="grey3_clr  bgfff mt10" style="display: flex;flex-direction: row;line-height: 36px;">
+        <div class="pl10 pr10 link_color1_clr">
+          <i class="fa fa-volume-up" aria-hidden="true"></i>
+        </div>
+        <div class="line1" style="flex: 1;">
+          巡检中应该注意的问题
+        </div>
+        <div class="pl10 pr10">
+          <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <div v-setheight>
+
+      <div class="mt10 bgfff pb10">
+
+        <div class="  bgfff mt10" style="display: flex;flex-direction: row;line-height: 36px;">
+          <div class="pl10 pr10 link_color1_clr">
+            <i class="fa fa-list-ul fs16" aria-hidden="true"></i>
+          </div>
+          <div class="fs16 line1 grey1_clr" style="flex: 1;">
+            我的任务
+          </div>
+          <div class="pl10 pr10 clearfix">
+          </div>
+        </div>
+
+
+        <div style="display: flex;flex-direction: row; flex-wrap:nowrap;overflow-x: scroll;">
+
+          <div class="pr10 pl10 pt10 pb10  ml12 mt10 mb10"
+            style="flex-shrink:0; border-radius: 6px; width: 150px;box-shadow: 0px 0px 5px #d2d2d2;">
+            <div class=" pb8" style="display: flex;flex-direction: row;"><span style="flex: 1;">一日一巡</span><span
+                class="fs12 success_color1_clr">进行中</span></div>
+            <div class="fs12 grey4_clr lh15" style="display: flex;flex-direction: row;">
+              <span style="flex: 1;">时间</span><span>07:30-20:20</span>
+            </div>
+            <div class="fs12 grey4_clr lh15" style="display: flex;flex-direction: row;">
+              <span style="flex: 1;">关键点</span><span>24个</span>
+            </div>
+          </div>
+
+          <div class="pr10 pl10 pt10 pb10  ml12  mt10 mb10"
+            style="flex-shrink:0; border-radius: 6px; width: 150px;box-shadow: 0px 0px 5px #d2d2d2;">
+            <div class=" pb8" style="display: flex;flex-direction: row;"><span style="flex: 1;">一日两巡</span><span
+                class="fs12 grey4_clr">已结束</span></div>
+            <div class="fs12 grey4_clr lh15" style="display: flex;flex-direction: row;">
+              <span style="flex: 1;">时间</span><span>07:30-12:20</span>
+            </div>
+            <div class="fs12 grey4_clr lh15" style="display: flex;flex-direction: row;">
+              <span style="flex: 1;"></span><span>13:30-20:20</span>
+            </div>
+          </div>
+
+          <div class="pr10 pl10 pt10 pb10  ml12 mt10 mb10"
+            style="flex-shrink:0; border-radius: 6px; width: 150px;box-shadow: 0px 0px 5px #d2d2d2;">
+            <div class=" pb8" style="display: flex;flex-direction: row;"><span style="flex: 1;">一日一巡</span><span
+                class="fs12 success_color1_clr">进行中</span></div>
+            <div class="fs12 grey4_clr lh15" style="display: flex;flex-direction: row;">
+              <span style="flex: 1;">时间</span><span>07:30-20:20</span>
+            </div>
+            <div class="fs12 grey4_clr lh15" style="display: flex;flex-direction: row;">
+              <span style="flex: 1;">关键点</span><span>24个</span>
+            </div>
+          </div>
+
+          <div class="pr10 pl10 pt10 pb10  ml12  mt10 mb10"
+            style="flex-shrink:0; border-radius: 6px; width: 150px;box-shadow: 0px 0px 5px #d2d2d2;">
+            <div class=" pb8" style="display: flex;flex-direction: row;"><span style="flex: 1;">一日两巡</span><span
+                class="fs12 grey4_clr">已结束</span></div>
+            <div class="fs12 grey4_clr lh15" style="display: flex;flex-direction: row;">
+              <span style="flex: 1;">时间</span><span>07:30-12:20</span>
+            </div>
+            <div class="fs12 grey4_clr lh15" style="display: flex;flex-direction: row;">
+              <span style="flex: 1;"></span><span>13:30-20:20</span>
+            </div>
+          </div>
+
+          <div class="pr10"></div>
+
+
+        </div>
+
+
+      </div>
+      <div>
+
+
+      </div>
+    </div>
+
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-moudle-boxes.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        moudles: [{
+          name: '日常巡检',
+          imgurl: '../../../common/images/m1.png'
+        }, {
+          name: '实时监控',
+          imgurl: '../../../common/images/m2.png'
+        }, {
+          name: '事件管理',
+          imgurl: '../../../common/images/m3.png'
+        }, {
+          name: '任务中心',
+          imgurl: '../../../common/images/m4.png'
+        }, {
+          name: '我的待办',
+          imgurl: '../../../common/images/m5.png'
+        }, {
+          name: '日常巡检',
+          imgurl: '../../../common/images/m1.png'
+        }, {
+          name: '实时监控',
+          imgurl: '../../../common/images/m2.png'
+        }, {
+          name: '事件管理',
+          imgurl: '../../../common/images/m3.png'
+        }],
+      }
+    },
+
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+
+
+      clickitem: function (name) {
+        this.$toast('您点击了' + name);
+      },
+      gotoPage: function (url) {
+        // alert(123)
+        appcan.window.open('demolistpage', url, 0, 16, 0, 0, 0);
+
+      }
+    },
+  });
+</script>
+
+</html>

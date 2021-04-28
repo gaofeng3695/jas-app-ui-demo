@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper " v-cloak>
+
+    <div class="pb10">
+      <jas-header title="事件详情"></jas-header>
+      <mt-navbar class="" v-model="selected">
+        <mt-tab-item @click.native="clickBar('anchor1')" id="anchor1">基本信息</mt-tab-item>
+        <mt-tab-item @click.native="clickBar('anchor2')" id="anchor2">图片视频信息</mt-tab-item>
+        <mt-tab-item @click.native="clickBar('anchor3')" id="anchor3">录音附件信息</mt-tab-item>
+      </mt-navbar>
+    </div>
+    <div v-setheight>
+
+      <div style="height:100%;overflow: auto;" class="anchorwrap">
+
+        <div id="anchor1" class=" pb10">
+
+          <div class="bgfff pl10 pr10">
+            <jas-detail-header style="background: #fff;" title="基本信息"></jas-detail-header>
+          </div>
+          <div class="">
+
+            <mt-field v-model="form.a" type="text" :disabled="false" v-required="true" label="管线名称"
+              placeholder="请输入管线名称">
+            </mt-field>
+            <jas-select-field label="管道等级" v-required="true" :is-search="0" :options="pipetypes" v-model="form.pipeoid">
+            </jas-select-field>
+            <jas-select-field label="等级多选" is-multi="true" v-required="true" :is-search="0" :options="pipetypes"
+              v-model="form.pipeoid2">
+            </jas-select-field>
+            <mt-field v-model="form.b" type="text" :disabled="false" v-required="true" label="事件类型"
+              placeholder="不可超过十个字">
+            </mt-field>
+            <mt-field v-model="form.c" type="number" :disabled="false" v-required="true" label="里程"
+              placeholder="请输入3-13之间的数值">
+              <i @click="showError" class="pl8 error_color1_clr fa fa-exclamation-circle"></i>
+            </mt-field>
+            <mt-field v-model="form.d" type="textarea" :disabled="false" v-required="false" label="事件发生现象及成因"
+              placeholder="事件发生现象及成因">
+            </mt-field>
+            <jas-datetime-field v-required="true"  label="发生日期时间" type="datetime" v-model="form.e"></jas-datetime-field>
+            <jas-datetime-field label="发生日期" :start-date="new Date('2018-01-01')" type="date" v-model="form.f"></jas-datetime-field>
+            <jas-datetime-field label="发生时间" type="time" v-model="form.g"></jas-datetime-field>
+
+          </div>
+
+        </div>
+
+        <div id="anchor2" class=" pb10">
+          <div class="bgfff pl10 pr10">
+            <jas-detail-header title="图片视频信息"></jas-detail-header>
+          </div>
+          <div class="bgfff ">
+            <jas-photo-manager :initfiles="initfiles" :colnumber="4" :isview="0" :max="10" label="上传图片">
+            </jas-photo-manager>
+            <jas-video-manager :initfiles="initfiles" :colnumber="4" :isview="0" :max="4" label="上传视频">
+            </jas-video-manager>
+          </div>
+
+        </div>
+
+
+        <div id="anchor3" class=" pb10">
+          <div class="bgfff pl10 pr10">
+            <jas-detail-header title="录音附件信息"></jas-detail-header>
+          </div>
+          <div class="bgfff">
+            <jas-voice-manager :initfiles="initfiles" :isview="0" :max="10" label="上传语音"></jas-voice-manager>
+            <jas-file-manager :initfiles="initfiles" :isview="0" :max="10" label="上传附件"></jas-file-manager>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <jas-more-button-footer @clickbtn="clickbtn" :mainbuttons="['保存']" :otherbuttons="[]">
+    </jas-more-button-footer>
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script src="./../../../common/components/jas-photo-manager.js"></script>
+<script src="./../../../common/components/jas-file-manager.js"></script>
+<script src="./../../../common/components/jas-video-manager.js"></script>
+<script src="./../../../common/components/jas-voice-manager.js"></script>
+<script src="./../../../common/components/jas-datetime-field.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      var that = this;
+      return {
+        form: {
+          a: '',
+          b: '',
+          c: '',
+          d: '',
+          e: '2015-12-30 12:50:00',
+          f: '',
+          g: '15:12',
+          pipeoid: '',
+          pipeoid2: '',
+        },
+        initfiles: [{
+          src: '../../../common/images/m1.png',
+          fileName: '巡线工名单.xls',
+          fileSize: '2.45'
+        }, {
+          src: '../../../common/images/m2.png',
+          fileName: '附件名称.txt',
+          fileSize: '2.45'
+        }, {
+          src: '../../../common/images/m3.png',
+          fileName: '附件2.txt',
+          fileSize: '2.45'
+        }],
+
+
+        pipetypes: [{
+            label: '高压',
+            value: '高压',
+          },
+          {
+            label: '中压',
+            value: '中压',
+          },
+          {
+            label: '低压',
+            value: '低压',
+          },
+        ],
+        selected: 'anchor1',
+        fields1: ['a', 'b', 'c', 'd'],
+        fields2: ['e', 'f', 'g'],
+        fields3: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+        myform: {
+          a: '张无忌',
+          b: '2019-12-23 15：24：36',
+          c: '管道科巡检负责人',
+          d: '成干线',
+          e: '管道科巡检部巡检二部',
+          f: '手持巡检器',
+          g: '第三方施工，有一只施工队未按照哦图纸的要求进行操作施工，造成燃气管道破损，情况较为严重，已经造成御园小区几十位用户燃气使用困难',
+        },
+        fieldsConfig: {
+          a: {
+            label: '发起人'
+          },
+          b: {
+            label: '发起时间'
+          },
+          c: {
+            label: '节点名称'
+          },
+          d: {
+            label: '上报内容'
+          },
+          e: {
+            label: '所属管线'
+          },
+          f: {
+            label: '所属部门'
+          },
+          g: {
+            label: '巡检设备'
+          }
+        },
+      }
+    },
+
+    // watch: {
+    //   selected: function (val) {
+    //     console.log(val)
+    //   }
+    // },
+    mounted: function () {
+      var that = this;
+      appcan.ready(function () {});
+      that.setTabWhenScroll();
+    },
+    methods: {
+
+      showError: function () {
+        this.$toast('请输入3-13之间的数值');
+      },
+      setTabWhenScroll: function () {
+        var that = this;
+        var anchorList = ['anchor1', 'anchor2', 'anchor3'];
+        var anchorPstnList = anchorList.map(function (id) {
+          var re = ($('#' + id)[0].offsetTop - $('#' + id).parent()[0].offsetTop);
+          return re;
+        });
+
+        function getindex(arr, num) {
+          var re = 0;
+          var reIndex = 0;
+          arr.forEach(function (item, index) {
+            if (num > item) {
+              if (item > re) {
+                re = item;
+                reIndex = index;
+              }
+            }
+          });
+          return reIndex;
+        }
+        $('.anchorwrap').on('scroll', function (e) {
+          var s = $('.anchorwrap')[0].scrollTop + 15 // 加15为距离优化
+          var index = getindex(anchorPstnList, s);
+          var tab = anchorList[index];
+          (that.selected != tab) && (that.selected = tab);
+          // console.log(tab)
+          // that.$toast(tab + '')
+        })
+      },
+      clickBar: function (id) {
+        // alert(id)
+        var dom = $('#' + id)[0];
+        dom.scrollIntoView && dom.scrollIntoView();
+      },
+      clickbtn: function (name) {
+        var that = this;
+        console.log(name)
+        this.toastInst && this.toastInst.close();
+        this.toastInst = this.$toast('您点击了' + name)
+
+      },
+
+      reset: function () {
+        for (var key in this.form) {
+          this.form[key] = '';
+        }
+      },
+      clear: function () {},
+      closePage: function () {
+        window.appcan && appcan.window.close();
+      },
+      searchList: function (name) {
+        this.$toast('您点击了' + '搜索');
+      },
+      gotoPage: function (url) {
+        // alert(123)
+        appcan.window.open('demolistpage', url, 0, 16, 0, 0, 0);
+      }
+    },
+  });
+</script>
+
+</html>

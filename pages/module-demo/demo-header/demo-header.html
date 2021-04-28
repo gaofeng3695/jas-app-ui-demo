@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper of-h " v-cloak>
+    <jas-header title="header"></jas-header>
+    <div v-setHeight>
+
+      <div class="mt10">
+        <jas-group-header title="默认返回键"></jas-group-header>
+        <div class="mb10">
+          <jas-header title="默认返回键"></jas-header>
+        </div>
+        <jas-header :is-return="false" title="无返回键"></jas-header>
+      </div>
+
+
+      <div class="mt10">
+        <jas-group-header title="常用的header"></jas-group-header>
+        <jas-header title="常用的header" right-icon="fa fa-map-o" @clickright="clickheader"></jas-header>
+      </div>
+
+      <div class="mt10">
+        <jas-group-header title="自定义图标"></jas-group-header>
+        <jas-header title="自定义图标" left-icon="fa fa-bell" right-icon="fa fa-map-o" @clickright="clickheader"
+          @clickleft="clickheader"></jas-header>
+      </div>
+
+
+      <div class="mt10">
+
+      </div>
+
+
+      <div class="mt10">
+
+        <jas-group-header title="带编辑的header"></jas-group-header>
+
+        <div>
+          <mt-header v-if="!isEdit" title="我是标题">
+            <mt-button icon="back" @click.native="closePage" slot="left"></mt-button>
+            <div slot="right">
+              <mt-button style="padding: 0 6px;" @click.native="isEdit = !isEdit">
+                <i class="fa fa-pencil-square-o" aria-hidden="true" slot="icon"></i>
+              </mt-button>
+              <mt-button style="padding: 0 6px;" @click.native="pop=!pop">
+                <i class="fa fa-plus" aria-hidden="true" slot="icon"></i>
+              </mt-button>
+            </div>
+          </mt-header>
+          <mt-header v-else title="我是标题">
+            <div slot="left">
+              <mt-button @click.native="isEdit = !isEdit">取消</mt-button>
+            </div>
+            <div slot="right">
+              <mt-button @click.native="clickBtn">全选</mt-button>
+            </div>
+          </mt-header>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        isEdit: false,
+        pop: false,
+      }
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+      clickheader: function (e) {
+        this.$toast('您点击了按钮')
+      },
+      clickBtn: function (e) {
+        console.log(e);
+      },
+      closePage: function () {
+        window.appcan && appcan.window.close();
+      },
+      gotoPage: function (url) {
+        appcan.window.open('demolistpage', url, 0, 16, 0, 0, 0);
+      },
+    },
+  });
+</script>
+
+</html>

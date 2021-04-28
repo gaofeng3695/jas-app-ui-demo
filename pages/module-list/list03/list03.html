@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper " v-cloak>
+
+    <div>
+      <mt-header v-if="!isEdit" title="事件管理">
+        <mt-button icon="back" @click.native="closePage" slot="left"></mt-button>
+        <div slot="right">
+          <mt-button style="padding: 0 6px;" @click.native="isEdit = !isEdit">
+            <i class="fa fa-pencil-square-o" aria-hidden="true" slot="icon"></i>
+          </mt-button>
+          <mt-button style="padding: 0 6px;" @click.native="pop=!pop">
+            <i class="fa fa-plus" aria-hidden="true" slot="icon"></i>
+          </mt-button>
+        </div>
+      </mt-header>
+      <mt-header v-else title="事件管理">
+        <div slot="left">
+          <mt-button @click.native="isEdit = !isEdit">取消</mt-button>
+        </div>
+        <div slot="right">
+          <mt-button @click.native="checkall">{{ checkVal?'全不选':'全选' }}</mt-button>
+        </div>
+      </mt-header>
+    </div>
+
+
+    <div>
+
+      <!-- <jas-more-searcher v-model="value" @search="searchList"></jas-more-searcher> -->
+      <div class="shadow-b">
+        <jas-more-searcher v-model="form.value" :ismore="true" @search="searchList" @clear="clear" @reset="reset">
+          <template>
+            <jas-select-field label="管线名称" :is-search="0" :options="pipes" v-model="form.pipeoid"></jas-select-field>
+            <jas-select-field label="管道等级" :is-search="0" :options="pipetypes" v-model="form.pipetype">
+            </jas-select-field>
+          </template>
+        </jas-more-searcher>
+      </div>
+
+    </div>
+    <div v-setheight>
+      <div style="height: 100%;overflow: auto;" class="listWrapper">
+        <mt-loadmore ref="loadmore" :top-method="refresh" :auto-fill="false" :bottom-method="loadBottom"
+          :bottom-all-loaded="allLoaded" @top-status-change="handleTopChange">
+          <ul>
+            <!-- <li v-for="item in list" style="padding: 20px 0;">{{ item }}</li> -->
+
+            <div class="bgfff bottomLine" style="padding: 10px 10px 10px 10px;" v-for="item in list01">
+              <div style="display:flex;align-items: center;">
+                <div v-if="isEdit" style="height: 22px;">
+                  <jas-base-checkbox v-model="item.checked" label=""></jas-base-checkbox>
+                </div>
+                <div style="height: 70px;width: 100px;"
+                  :style="{'background':'url('+ item.b +') no-repeat center center','background-size':'cover'}"></div>
+                <div style="flex: 1;" class="pl10">
+                  <div class="fs12 grey5_clr lh16">{{item.a}}</div>
+                  <div class="line2 fs14 lh16">{{item.c}}</div>
+                </div>
+              </div>
+              
+            </div>
+
+
+          </ul>
+        </mt-loadmore>
+      </div>
+    </div>
+
+    <div v-if="isEdit">
+      <jas-more-button-footer @clickbtn="clickbtn" :mainbuttons="['通过']" :otherbuttons="['驳回发起','驳回']"
+        :morebuttons="['修改','操作一','操作二']">
+      </jas-more-button-footer>
+    </div>
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script src="./../../../common/components/jas-more-searcher.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        list: [{
+          a: '李某某 2020-03-19 上传',
+          b: '../../../common/images/m1.png',
+          c: '现场情况不是特别严重，事情情况如下，道路特别的拥堵，一是车辆较多，二是行人较多，三是有结婚的车队',
+          ckecked: false
+        }, {
+          a: '李某某 2020-03-19 上传',
+          b: '../../../common/images/m2.png',
+          c: '现场情况不是特别严重，事情情况如下，道路特别的拥堵，一是车辆较多，二是行人较多，三是有结婚的车队',
+          ckecked: false
+        }, {
+          a: '李某某 2020-03-19 上传',
+          b: '../../../common/images/m3.png',
+          c: '现场情况不是特别严重，事情情况如下，道路特别的拥堵，一是车辆较多，二是行人较多，三是有结婚的车队',
+          ckecked: false
+        }, {
+          a: '李某某 2020-03-19 上传',
+          b: '../../../common/images/m4.png',
+          c: '现场情况不是特别严重，事情情况如下，道路特别的拥堵，一是车辆较多，二是行人较多，三是有结婚的车队',
+          ckecked: false
+        }, {
+          a: '李某某 2020-03-19 上传',
+          b: '../../../common/images/m5.png',
+          c: '现场情况不是特别严重，事情情况如下，道路特别的拥堵，一是车辆较多，二是行人较多，三是有结婚的车队',
+          ckecked: false
+        }, ],
+        list01: [],
+        topStatus: '',
+        isEdit: false,
+        checkVal: false,
+        form: {
+          value: '',
+          pipeoid: '',
+          pipetype: '',
+        },
+        pipes: [{
+            label: '蒙西管线',
+            value: '蒙西管线',
+          },
+          {
+            label: '中俄管线',
+            value: '中俄管线',
+          },
+        ],
+        pipetypes: [{
+            label: '高压',
+            value: '高压',
+          },
+          {
+            label: '中压',
+            value: '中压',
+          },
+          {
+            label: '低压',
+            value: '低压',
+          },
+        ],
+        pageNo: 1,
+        allLoaded: false,
+      }
+    },
+
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+      that.refresh()
+      appcan.ready(function () {});
+    },
+    methods: {
+      clickbtn: function (name) {
+        var that = this;
+        console.log(name)
+        this.toastInst && this.toastInst.close();
+        this.toastInst = this.$toast('您点击了' + name)
+
+        if (name == '通过') {
+          this.$messagebox({
+            title: '提示',
+            message: '确定执行此操作?',
+            showCancelButton: true
+          }).then(function (type) { //{ value, action }
+            if (type == 'confirm') {
+              that.$toast('您点击了' + type)
+            }
+          });
+        }
+
+      },
+      checkall: function () {
+        var that = this;
+        that.checkVal = that.checkVal ? false : true;
+        that.list01 = that.list01.map(function (item) {
+          item.checked = that.checkVal;
+          return item
+        })
+      },
+      refresh: function () {
+        var that = this;
+        this.pageNo = 1;
+        this.allLoaded = false;
+        this._requestList(true);
+      },
+      loadBottom: function () {
+        if (this.allLoaded) {
+          return;
+        }
+        this._requestList();
+      },
+      _requestList: function (isFresh) {
+        console.log(123123123)
+        var that = this;
+        that.toastInst && that.toastInst.close();
+        that.$indicator.open({
+          text: '正在加载数据...',
+          spinnerType: 'fading-circle'
+        });
+        setTimeout(function () {
+          that.$indicator.close();
+          var _arr = JSON.parse(JSON.stringify(that.list));
+
+          if (that.pageNo < 4) {
+            that.pageNo++;
+            if (isFresh) {
+              that.list01 = [].concat(_arr);
+              setTimeout(function () {
+                isFresh && ($('.listWrapper')[0].scrollTop = 0);
+              }, 10);
+            } else {
+              that.list01 = that.list01.concat(_arr);
+            }
+          } else {
+            this.allLoaded = true;
+            that.toastInst = that.$toast('没有更多数据');
+          }
+          that.$refs.loadmore.onTopLoaded();
+          that.$refs.loadmore.onBottomLoaded();
+        }, 600)
+      },
+      handleTopChange: function (status) {
+        console.log(status)
+        this.topStatus = status;
+
+      },
+      reset: function () {
+        for (var key in this.form) {
+          this.form[key] = '';
+        }
+      },
+      clear: function () {},
+      closePage: function () {
+        window.appcan && appcan.window.close();
+      },
+      searchList: function (name) {
+        this.$toast('您点击了' + '搜索');
+      },
+      gotoPage: function (url) {
+        // alert(123)
+        appcan.window.open('demolistpage', url, 0, 16, 0, 0, 0);
+      }
+    },
+  });
+</script>
+
+</html>

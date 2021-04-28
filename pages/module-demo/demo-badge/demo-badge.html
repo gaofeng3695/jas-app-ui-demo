@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+
+<body>
+  <div class="_outer-wrapper of-h " v-cloak>
+    <jas-header title="badge"></jas-header>
+
+    <div v-setHeight>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="指定大小"></jas-group-header>
+        <mt-badge size="small">30</mt-badge>
+        <mt-badge size="normal">10</mt-badge>
+        <mt-badge size="large">10</mt-badge>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="指定类型"></jas-group-header>
+        <mt-badge type="primary">30</mt-badge>
+        <mt-badge type="error">10</mt-badge>
+        <mt-badge type="success">10</mt-badge>
+        <mt-badge type="warning">10</mt-badge>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="自定义颜色"></jas-group-header>
+        <mt-badge size="normal" color="#888">自定义颜色</mt-badge>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      var that = this;
+      return {
+        sheetVisible: false,
+        actions: [{
+          name: '拍照',
+          method: this.fun1
+        }, {
+          name: '从相册选择',
+          method: this.fun2
+        }]
+      }
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+      donormal: function () {
+        var that = this;
+        this.sheetVisible = true;
+      },
+      fun1: function () {
+        this.$toast('您点击了 第一个按钮')
+      },
+      fun2: function () {
+        this.$toast('您点击了 第二个按钮')
+      },
+    },
+  });
+</script>
+
+</html>

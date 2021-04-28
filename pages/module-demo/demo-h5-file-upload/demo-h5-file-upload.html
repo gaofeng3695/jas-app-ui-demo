@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <!-- <link rel="stylesheet" href="./../../../lib/vant/2.9.4/index.min.css"> -->
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper of-h " v-cloak>
+    <jas-header title="附件组件"></jas-header>
+    <div v-setHeight>
+
+
+      <div class="mt10">
+        <jas-group-header title="附件上传"></jas-group-header>
+        <div class="bgfff mb10">
+          <jas-h5-file-manager ref="filemanager" :initfiles="initfiles" :max="5"></jas-h5-file-manager>
+
+          <div class="ml10 mr10">
+            <mt-button type="primary" style="width: 100%;" @click="upload" size="normal">上传</mt-button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <div class="mt10">
+        <jas-group-header title="附件上传"></jas-group-header>
+        <div class="bgfff mb10">
+          <van-uploader v-model="initfiles" :after-read="afterRead" />
+        </div>
+      </div> -->
+
+
+
+
+
+
+    </div>
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<!-- <script src="./../../../lib/vant/2.9.4/vant.min.js"></script> -->
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script src="./../../../common/components/jas-h5-file-manager.js"></script>
+
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        initfiles: [{
+          url: '../../../common/images/m1.png',
+          fileName: '巡线工名单.xls',
+          fileSize: '2.45'
+        }, {
+          url: '../../../common/images/m2.png',
+          fileName: '附件名称附件名称附件名称附件名称.txt',
+          fileSize: '2.45'
+        }, {
+          url: '../../../common/images/m3.png',
+          fileName: '附件2.txt',
+          fileSize: '2.45'
+        }],
+      }
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+      upload: function () {
+        var that = this;
+        var files = this.$refs.filemanager.files.filter(function (item) {
+          return item.uploadStatus == '0';
+        }); // 过滤无需上传的文件
+
+        if (files.length > 0) {
+          var total = files.length;
+          var nSuccess = 0;
+          var nFail = 0;
+          var allDone = function () { // 上传完毕的回调
+            if (nSuccess + nFail == total) {
+              that.$indicator.close();
+              that.$toast('上传' + total + '个，成功上传' + nSuccess + '个，失败上传' + nFail + '个')
+            }
+          };
+          this.$indicator.open('上传中...');
+          files.forEach(function (item) { // 开始异步上传文件
+            var formData = new FormData();
+            formData.append('file', item.file);
+            formData.append('fileDescription', '来自移动端测试');
+            var url =
+              'http://localhost:3060/jasproxy/attachment/upload.do?token=a88e9d21-2e67-4b10-8330-87d7f7834a17&businessId=7e4a2654-ba51-4a5e-a26d-e740934eb2ff&businessType=attachment&fileType=file';
+
+            var xhr = new XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (a, b, c) {
+              console.log('progress', a, b, c)
+            }, false); //监听上传进度
+            xhr.addEventListener("load", function (a, b, c) {
+              nSuccess++;
+              allDone();
+              console.log('load', a, b, c)
+            }, false);
+            xhr.addEventListener("error", function (a, b, c) {
+              nFail++;
+              allDone();
+              console.log('error', a, b, c)
+            }, false);
+            xhr.open("POST", url);
+            xhr.send(formData);
+          });
+        }
+      },
+      afterRead: function (file) {
+        console.log(file)
+      },
+    },
+  });
+</script>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/element-ui/v2.12.0/theme-chalk/index.min.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+
+<body>
+  <div class="_outer-wrapper of-h " v-cloak>
+    <jas-header title="树级选择"></jas-header>
+
+    <div v-setHeight>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="自定义数据prop名称"></jas-group-header>
+        <jas-tree-pick-field label="选择管线" v-model="form.line1" :props="defaultProps" :options="data">
+        </jas-tree-pick-field>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="默认值"></jas-group-header>
+        <jas-tree-pick-field label="选择管线" v-model="form.line2" :props="defaultProps" :options="data">
+        </jas-tree-pick-field>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="最大选择数"></jas-group-header>
+        <jas-tree-pick-field label="选择管线" v-model="form.line3" :props="defaultProps" :options="data" :maxvalue="1">
+        </jas-tree-pick-field>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="禁用"></jas-group-header>
+        <jas-tree-pick-field label="选择管线" v-model="form.line4" :props="defaultProps" :options="data" :disabled="true">
+        </jas-tree-pick-field>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../lib/element-ui/v2.12.0/index.min.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script src="./../../../common/components/jas-tree-pick-field.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      var that = this;
+      return {
+        form: {
+          line1: '',
+          line2: '1,9,6', // 多个id
+          line3: '',
+          line4: '1',
+        },
+        data: [{
+          id: 1,
+          text: '一级 1',
+          children: [{
+            id: 4,
+            text: '二级 1-1',
+            children: [{
+              id: 9,
+              text: '三级 1-1-1'
+            }, {
+              id: 10,
+              text: '三级 1-1-2'
+            }]
+          }]
+        }, {
+          id: 2,
+          text: '一级 2',
+          children: [{
+            id: 5,
+            text: '二级 2-1'
+          }, {
+            id: 6,
+            text: '二级 2-2'
+          }]
+        }, {
+          id: 3,
+          text: '一级 3',
+          children: [{
+            id: 7,
+            text: '二级 3-1'
+          }, {
+            id: 8,
+            text: '二级 3-2',
+            children: [{
+              id: 11,
+              text: '三级 3-2-1'
+            }, {
+              id: 12,
+              text: '三级 3-2-2'
+            }, {
+              id: 13,
+              text: '三级 3-2-3'
+            }]
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'text'
+        }
+      }
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+      onValuesChange: function () {
+        var that = this;
+      },
+      fun1: function () {
+        this.$toast('您点击了 第一个按钮')
+      },
+
+    },
+  });
+</script>
+
+</html>

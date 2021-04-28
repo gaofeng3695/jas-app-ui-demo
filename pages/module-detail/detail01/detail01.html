@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper " v-cloak>
+
+    <div class="pb10">
+      <mt-header title="事件详情">
+        <mt-button icon="back" @click.native="closePage" slot="left"></mt-button>
+        <div slot="right">
+          <mt-button style="padding: 0 6px;" @click.native="pop=!pop">
+            <i class="fa fa-plus" aria-hidden="true" slot="icon"></i>
+          </mt-button>
+        </div>
+      </mt-header>
+      <mt-navbar class="" v-model="selected">
+        <mt-tab-item @click.native="clickBar('anchor1')" id="anchor1">基本信息</mt-tab-item>
+        <mt-tab-item @click.native="clickBar('anchor2')" id="anchor2">第三方施工信息</mt-tab-item>
+        <mt-tab-item @click.native="clickBar('anchor3')" id="anchor3">其他信息</mt-tab-item>
+      </mt-navbar>
+    </div>
+    <div v-setheight>
+
+      <div style="height:100%;overflow: auto;" class="anchorwrap">
+
+        <div id="anchor1" class="pr10 pl10 pb10">
+          <div class="bgfff pr10 pl10 pb10 br6">
+            <jas-detail-header title="基本信息"></jas-detail-header>
+            <div class="pt6">
+              <jas-detail-field-group-simple :fields="fields1" :form="myform" :fields-config="fieldsConfig">
+              </jas-detail-field-group-simple>
+            </div>
+          </div>
+        </div>
+
+        <div id="anchor2" class="pr10 pl10 pb10">
+          <div class="bgfff pr10 pl10 pb10 br6">
+            <jas-detail-header title="第三方施工信息"></jas-detail-header>
+            <div class="pt6">
+              <jas-detail-field-group-simple :fields="fields2" :form="myform" :fields-config="fieldsConfig">
+              </jas-detail-field-group-simple>
+              <jas-detail-field-group-simple :fields="fields2" :form="myform" :fields-config="fieldsConfig">
+              </jas-detail-field-group-simple>
+              <jas-detail-field-group-simple :fields="fields2" :form="myform" :fields-config="fieldsConfig">
+              </jas-detail-field-group-simple>
+            </div>
+          </div>
+        </div>
+
+        <div id="anchor3" class="pr10 pl10 pb10 pb10">
+          <div class="bgfff  pb10 br6">
+            <div class="pr10 pl10">
+              <jas-detail-header title="其他信息"></jas-detail-header>
+            </div>
+
+            <div class="pt6">
+              <jas-photo-manager :initfiles="initfiles" :colnumber="3" :isview="true" :max="10" label="图片信息">
+              </jas-photo-manager>
+              <jas-file-manager :initfiles="initfiles" :isview="1" :max="10" label="附件信息"></jas-file-manager>
+              <jas-video-manager :initfiles="initfiles" :colnumber="4" :isview="1" :max="4" label="视频信息">
+              </jas-video-manager>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <jas-more-button-footer @clickbtn="clickbtn" :mainbuttons="['通过']" :otherbuttons="['驳回发起','驳回']"
+      :morebuttons="['修改','操作一','操作二']">
+    </jas-more-button-footer>
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script src="./../../../common/components/jas-file-manager.js"></script>
+<script src="./../../../common/components/jas-photo-manager.js"></script>
+<script src="./../../../common/components/jas-video-manager.js"></script>
+
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        initfiles: [{
+          src: '../../../common/images/m1.png',
+          fileName: '巡线工名单.xls',
+          fileSize: '2.45'
+        }, {
+          src: '../../../common/images/m2.png',
+          fileName: '附件名称附件名称附件名称附件名称.txt',
+          fileSize: '2.45'
+        }, {
+          src: '../../../common/images/m3.png',
+          fileName: '附件2.txt',
+          fileSize: '2.45'
+        }],
+        selected: 'anchor1',
+        fields1: ['a', 'b', 'c', 'd'],
+        fields2: ['e', 'f', 'g'],
+        fields3: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+        myform: {
+          a: '张无忌',
+          b: '2019-12-23 15：24：36',
+          c: '管道科巡检负责人',
+          d: '成干线',
+          e: '管道科巡检部巡检二部',
+          f: '手持巡检器',
+          g: '第三方施工，有一只施工队未按照哦图纸的要求进行操作施工，造成燃气管道破损，情况较为严重，已经造成御园小区几十位用户燃气使用困难',
+        },
+        fieldsConfig: {
+          a: {
+            label: '发起人'
+          },
+          b: {
+            label: '发起时间'
+          },
+          c: {
+            label: '节点名称'
+          },
+          d: {
+            label: '上报内容'
+          },
+          e: {
+            label: '所属管线'
+          },
+          f: {
+            label: '所属部门'
+          },
+          g: {
+            label: '巡检设备'
+          }
+        },
+      }
+    },
+
+    // watch: {
+    //   selected: function (val) {
+    //     console.log(val)
+    //   }
+    // },
+    mounted: function () {
+      var that = this;
+      appcan.ready(function () {});
+      that.setTabWhenScroll();
+    },
+    methods: {
+      setTabWhenScroll: function () {
+        var that = this;
+        var anchorList = ['anchor1', 'anchor2', 'anchor3'];
+        var anchorPstnList = anchorList.map(function (id) {
+          var re = ($('#' + id)[0].offsetTop - $('#' + id).parent()[0].offsetTop);
+          return re;
+        });
+
+        function getindex(arr, num) {
+          var re = 0;
+          var reIndex = 0;
+          arr.forEach(function (item, index) {
+            if (num > item) {
+              if (item > re) {
+                re = item;
+                reIndex = index;
+              }
+            }
+          });
+          return reIndex;
+        }
+        $('.anchorwrap').on('scroll', function (e) {
+          var s = $('.anchorwrap')[0].scrollTop + 15 // 加15为距离优化
+          var index = getindex(anchorPstnList, s);
+          var tab = anchorList[index];
+          (that.selected != tab) && (that.selected = tab);
+          // console.log(tab)
+          // that.$toast(tab + '')
+        })
+      },
+      clickBar: function (id) {
+        // alert(id)
+        var dom = $('#' + id)[0];
+        dom.scrollIntoView && dom.scrollIntoView();
+      },
+      clickbtn: function (name) {
+        var that = this;
+        console.log(name)
+        this.toastInst && this.toastInst.close();
+        this.toastInst = this.$toast('您点击了' + name)
+
+        if (name == '通过') {
+          this.$messagebox({
+            title: '提示',
+            message: '确定执行此操作?',
+            showCancelButton: true
+          }).then(function (type) { //{ value, action }
+            if (type == 'confirm') {
+              that.$toast('您点击了' + type)
+            }
+          });
+        }
+
+      },
+
+      reset: function () {
+        for (var key in this.form) {
+          this.form[key] = '';
+        }
+      },
+      clear: function () {},
+      closePage: function () {
+        window.appcan && appcan.window.close();
+      },
+      searchList: function (name) {
+        this.$toast('您点击了' + '搜索');
+      },
+      gotoPage: function (url) {
+        // alert(123)
+        appcan.window.open('demolistpage', url, 0, 16, 0, 0, 0);
+      }
+    },
+  });
+</script>
+
+</html>

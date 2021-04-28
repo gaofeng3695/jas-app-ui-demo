@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper " v-cloak>
+
+    <div class="of-h ">
+      <div class=" mb10">
+        <!-- 头部轮播图模块 -->
+        <div class="of-h" style="margin-bottom: -65px;">
+          <div class="of-h" style="height: 140px;">
+            <div style="height: 100%;background: url(../../../common/images/bg.png);background-size:cover;"></div>
+          </div>
+        </div>
+
+        <div class="bgfff" style="padding:35px 0 25px;border-radius:8px;margin: 0 15px;position: relative;z-index: 10;">
+          <div :style="userbg"
+            style="width: 60px;height: 60px;border-radius: 50%;position: absolute;top: -30px;left: 50%;margin-left: -30px;">
+          </div>
+          <div class="lh16 ta-c fs16" style="padding-bottom:4px;">{{userObj.name}}</div>
+          <div class="lh16 ta-c fs12" style="padding-bottom:4px;">{{userObj.from}}</div>
+          <div class="lh16 ta-c fs12 grey5_clr">{{userObj.group}}</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="" v-setheight>
+
+      <div class=" bgfff of-h mt-cell-box" style=" border-radius: 8px; margin: 0px 15px;">
+
+        <mt-cell @click.native="clickitem('人像采集')" title="人像采集" is-link>
+          <span slot="icon" class="mr8" width="20" height="20">
+            <i style="vertical-align: middle;color:#2c9dfa;" class="fa fa-camera-retro"></i>
+          </span>
+        </mt-cell>
+        <mt-cell @click.native="clickitem('打印机配置')" title="打印机配置" is-link>
+          <span>默认打印2份</span>
+          <span slot="icon" class="mr8" width="20" height="20">
+            <i style="vertical-align: middle;color:#2c9dfa;" class="fa fa-print"></i>
+          </span>
+        </mt-cell>
+        <mt-cell @click.native="clickitem('系统更新')" title="系统更新" is-link>
+          <span>版本 V1.3.9</span>
+          <span slot="icon" class="mr8" width="20" height="20">
+            <i style="vertical-align: middle;color:#ffac30;" class="fs18 fa fa-arrow-circle-up"></i>
+          </span>
+        </mt-cell>
+
+      </div>
+
+      <div class="" style="margin: 10px 15px;">
+        <mt-button style="background: #fff;" type="default" @click="checkout" size="large">退出</mt-button>
+      </div>
+
+
+      <div>
+
+
+      </div>
+    </div>
+
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-moudle-boxes.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        userbg: {
+          background: 'url(../../../common/images/man.png) no-repeat center center',
+          backgroundSize: 'cover'
+        },
+        userObj: {
+          name: '王九九',
+          from: '西南管道公司兰成渝输油站',
+          group: '巡线一组 管道工'
+        },
+      }
+    },
+
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+      appcan.ready(function () {});
+    },
+    methods: {
+      checkout: function () {
+        var that = this;
+        that.$messagebox({
+          title: '提示',
+          message: '您确定退出系统吗?',
+          showCancelButton: true
+        }).then(function (type) { //{ value, action }
+          if (type == 'confirm') {
+            window.uexWidgetOne && uexWidgetOne.exit(0);
+          }
+        });
+      },
+      clickitem: function (item) {
+        this.$toast('您点击了' + item);
+      },
+    },
+  });
+</script>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper " v-cloak>
+    <jas-header is-return="true" title="宫格组件"></jas-header>
+
+    <div v-setheight>
+
+      <div class="mt10">
+        <jas-group-header title="5格"></jas-group-header>
+        <jas-moudle-boxes :moudles="moudles" :colnumber="5" @clickitem="clickitem"></jas-moudle-boxes>
+      </div>
+
+      <div class="mt10">
+        <jas-group-header title="自定义圆角"></jas-group-header>
+        <jas-moudle-boxes :moudles="moudles" border-radius="30%" :colnumber="4" @clickitem="clickitem"></jas-moudle-boxes>
+      </div>
+
+      <div class="mt10">
+        <jas-group-header title="4格"></jas-group-header>
+        <jas-moudle-boxes :moudles="moudles" :colnumber="4" @clickitem="clickitem"></jas-moudle-boxes>
+      </div>
+
+      <div class="mt10">
+        <jas-group-header title="3格"></jas-group-header>
+        <jas-moudle-boxes :moudles="moudles" :colnumber="3" @clickitem="clickitem"></jas-moudle-boxes>
+      </div>
+
+    </div>
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script src="./../../../common/components/jas-moudle-boxes.js"></script>
+
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        moudles: [{
+          name: '日常巡检',
+          imgurl: '../../../common/images/m1.png'
+        }, {
+          name: '实时监控',
+          imgurl: '../../../common/images/m2.png'
+        }, {
+          name: '事件管理',
+          imgurl: '../../../common/images/m3.png'
+        }, {
+          name: '任务中心',
+          imgurl: '../../../common/images/m4.png'
+        }, {
+          name: '我的待办',
+          imgurl: '../../../common/images/m5.png'
+        }, {
+          name: '日常巡检',
+          imgurl: '../../../common/images/m1.png'
+        }, {
+          name: '实时监控',
+          imgurl: '../../../common/images/m2.png'
+        }, {
+          name: '事件管理',
+          imgurl: '../../../common/images/m3.png'
+        }],
+
+      }
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+      clickitem: function (name) {
+        this.$toast('您点击了' + name);
+      },
+    },
+  });
+</script>
+
+</html>

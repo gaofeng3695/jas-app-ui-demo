@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper " v-cloak>
+
+    <jas-header title="demo列表"></jas-header>
+    <div class="of-h">
+
+      <mt-navbar class="mb10" v-model="selected">
+        <mt-tab-item id="1">组件</mt-tab-item>
+        <mt-tab-item id="2">页面组</mt-tab-item>
+      </mt-navbar>
+    </div>
+    <!-- tab-container -->
+    <div v-setheight>
+
+      <mt-tab-container v-model="selected">
+
+        <mt-tab-container-item id="1">
+
+          <template v-for="item in alist_components">
+            <mt-cell :title="item.name" is-link @click.native="gotoPage(item.link)">
+            </mt-cell>
+          </template>
+
+        </mt-tab-container-item>
+
+        <mt-tab-container-item id="2">
+          <template v-for="item in alist_pages">
+            <mt-cell :title="item.name" is-link @click.native="gotoPage(item.link)">
+            </mt-cell>
+          </template>
+        </mt-tab-container-item>
+
+      </mt-tab-container>
+
+
+
+
+
+
+    </div>
+
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        selected: '1',
+        alist_components: [ //
+          {
+            name: 'toast(文字提示)',
+            link: '../demo-toast/demo-toast.html'
+          }, {
+            name: 'indicator（加载提示）',
+            link: '../demo-indicator/demo-indicator.html'
+          }, {
+            name: 'message-box（消息弹窗）',
+            link: '../demo-message-box/demo-message-box.html'
+          }, {
+            name: '轮播',
+            link: '../demo-swipe/demo-swipe.html'
+          }, {
+            name: 'action-sheet（底部弹出式按钮）',
+            link: '../demo-action-sheet/demo-action-sheet.html'
+          }, {
+            name: 'badge（徽标）',
+            link: '../demo-badge/demo-badge.html'
+          }, {
+            name: '按钮',
+            link: '../demo-button/demo-button.html'
+          }, {
+            name: 'header',
+            link: '../demo-header/demo-header.html'
+          }, {
+            name: 'footer',
+            link: '../demo-footer/demo-footer.html'
+          }, {
+            name: '宫格',
+            link: '../demo-boxes/demo-boxes.html'
+          }, {
+            name: '搜索框',
+            link: '../demo-searcher/demo-searcher.html'
+          }, {
+            name: '树级选择表单项',
+            link: '../demo-tree-picker/demo-tree-picker.html'
+          }, {
+            name: '图片查看与管理',
+            link: '../demo-pic-manager/demo-pic-manager.html'
+          }, {
+            name: '语音查看与管理',
+            link: '../demo-voice-manager/demo-voice-manager.html'
+          }, {
+            name: '视频查看与管理',
+            link: '../demo-video-manager/demo-video-manager.html'
+          }, {
+            name: '附件查看与管理',
+            link: '../demo-file-manager/demo-file-manager.html'
+          }, {
+            name: 'H5端附件管理',
+            link: '../demo-h5-file-upload/demo-h5-file-upload.html'
+          }, {
+            name: '时间日期选择表单项',
+            link: '../demo-datetime-select/demo-datetime-select.html'
+          }, {
+            name: 'tabs切换',
+            link: '../../module-frame/index-frame/index-frame.html'
+          }
+        ],
+        alist_pages: [ //
+          {
+            name: '登录模块（登录、注册等）',
+            link: '../../module-login/login/login.html'
+          }, {
+            name: '首页模块1',
+            link: '../../module-home/home01/index-frame.html'
+          }, {
+            name: '首页模块2',
+            link: '../../module-home/home02/index-frame.html'
+            // link: '../../module-home/home02/home02.html'
+          }, {
+            name: '列表模块1',
+            link: '../../module-list/list01/list01.html'
+          }, {
+            name: '列表模块2',
+            link: '../../module-list/list02/list02.html'
+          }, {
+            name: '列表模块3',
+            link: '../../module-list/list03/list03.html'
+          }, {
+            name: '详情模块1',
+            link: '../../module-detail/detail01/detail01.html'
+          }, {
+            name: '详情模块2',
+            link: '../../module-detail/detail02/detail02.html'
+          }, {
+            name: '表单模块1',
+            link: '../../module-form/form01/form01.html'
+          }, {
+            name: '个人中心',
+            link: '../../module-user/user01/user01.html'
+          }, {
+            name: '数据同步',
+            link: '../../module-datasync/datasync/datasync.html'
+          },
+        ]
+      }
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+      gotoPage: function (url) {
+        // alert(123)
+        appcan.window.open('demolistpage', url, 10, 16, 0, 0, 0);
+
+      }
+    },
+  });
+</script>
+
+</html>

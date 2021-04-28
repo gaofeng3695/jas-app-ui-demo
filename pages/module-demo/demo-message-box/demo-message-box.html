@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+  .diyfontsize {
+    font-size: 38px;
+  }
+</style>
+
+<body>
+  <div class="_outer-wrapper of-h " v-cloak>
+    <jas-header title="message-box"></jas-header>
+
+    <div v-setHeight>
+
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="基础提示"></jas-group-header>
+        <div class=" pl10 pr10 pb10">
+          <mt-button type="primary" @click="donormal">基础提示</mt-button>
+        </div>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="自定义按钮"></jas-group-header>
+        <div class=" pl10 pr10 pb10">
+          <mt-button type="primary" @click="donormal2">自定义按钮</mt-button>
+        </div>
+      </div>
+
+      <div class="bgfff mt10">
+        <jas-group-header class="mb10" title="处理点击事件"></jas-group-header>
+        <div class=" pl10 pr10 pb10">
+          <mt-button type="primary" @click="donormal3">处理点击事件</mt-button>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+
+      }
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+
+      appcan.ready(function () {});
+    },
+    methods: {
+      donormal: function () {
+        var that = this;
+        this.$messagebox('提示', '操作成功');
+      },
+      closeTip: function () {
+        this.inst && this.inst.close();
+      },
+      donormal2: function () {
+        var that = this;
+        this.$messagebox({
+          title: '提示',
+          message: '确定执行此操作?',
+          showCancelButton: true,
+          cancelButtonText: '否',
+          confirmButtonText: '是',
+        })
+      },
+      donormal3: function (index) {
+        var that = this;
+        this.$messagebox({
+          title: '提示',
+          message: '确定执行此操作?',
+          showCancelButton: true,
+          cancelButtonText: '否',
+          confirmButtonText: '是',
+        }).then(function (action) { // confirm cancel
+          if (action == 'confirm') {
+            that.$toast('您点击了确定')
+          } else if (action == 'cancel') {
+            that.$toast('您点击了取消')
+          }
+        });
+      },
+    },
+  });
+</script>
+
+</html>

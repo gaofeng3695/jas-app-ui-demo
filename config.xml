@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<widget appId="aaaot10050" channelCode="0000" height="480" pid="" sreensize="4.5" version="00.00.0000" viewmode="application" widgetId="" width="320">
+    <name>appcan-ui-demo</name>
+    <description>基于appcan移动端的样式设计规范，编写的前端ui项目</description>
+    <author email=""/>
+    <icon src="common/images/logo.png"/>
+    <license href=""/>
+    <content encoding="utf-8" src="init.html"/>
+    <updateurl/>
+    <logserverip/>
+    <showmyspace>false</showmyspace>
+    <obfuscation>true</obfuscation>
+    <bgcolor>#fefefe</bgcolor>
+    <orientation>15</orientation>
+    <error src=""/>
+    <removeloading/>
+    <debug/>
+    <partobfuscation/>
+    <webapp>false</webapp>
+</widget>

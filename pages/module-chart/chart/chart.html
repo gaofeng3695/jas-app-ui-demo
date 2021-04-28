@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="./../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../../../common/css/jas-main.css">
+</head>
+<style>
+</style>
+
+<body>
+  <div class="_outer-wrapper " v-cloak>
+    <jas-header title="统计分析"></jas-header>
+
+    <div class="" v-setheight>
+
+      <div class="mb10">
+        <jas-detail-header class="pl10" title="标准折线图" noline="1"></jas-detail-header>
+        <div class="bgfff">
+          <canvas id="chart01" :width="canvasWidth" :height="180"></canvas>
+        </div>
+      </div>
+      <div class="mb10">
+        <jas-detail-header class="pl10" title="标准柱形图" noline="1"></jas-detail-header>
+        <div class="bgfff">
+          <canvas id="chart02" :width="canvasWidth" :height="180"></canvas>
+        </div>
+      </div>
+      <div class="mb10">
+        <jas-detail-header class="pl10" title="标准饼图" noline="1"></jas-detail-header>
+        <div class="bgfff">
+          <canvas id="chart03" :width="canvasWidth" :height="180"></canvas>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+</body>
+
+<script src="./../../../appcan/js/appcan.js"></script>
+<script src="./../../../lib/vue/vue.js"></script>
+<script src="./../../../lib/f2/f2.js"></script>
+<script src="./../../../lib/mint-ui/index.js"></script>
+<script src="./../../../common/js/jas-tools.js"></script>
+<script src="./../../../common/components/jas-components.js"></script>
+<script src="./mockdata.js"></script>
+<script>
+  window.vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        canvasWidth: $(document).width(),
+      }
+    },
+
+    created: function () {
+
+    },
+    mounted: function () {
+      var that = this;
+      that.renderChart1();
+      that.renderChart2();
+      that.renderChart3();
+      appcan.ready(function () {});
+    },
+    methods: {
+      clickitem: function (item) {
+        this.$toast('您点击了' + item);
+      },
+      renderChart1: function () {
+        var chart = new F2.Chart({
+          id: 'chart01',
+          pixelRatio: window.devicePixelRatio
+        });
+
+        chart.source(Mockdata.line1, {
+          value: {
+            tickCount: 5,
+            min: 0
+          },
+          day: {
+            range: [0.05, 0.95]
+          }
+        });
+        chart.tooltip({
+          showCrosshairs: true,
+          showItemMarker: false,
+          onShow: function onShow(ev) {
+            var items = ev.items;
+            items[0].name = null;
+            items[0].value = '' + items[0].value + 'km';
+          }
+        });
+        chart.axis('day', {
+          label: function label(text, index, total) {
+            var textCfg = {};
+            if (index === 0) {
+              textCfg.textAlign = 'left';
+            } else if (index === total - 1) {
+              textCfg.textAlign = 'right';
+            }
+            return textCfg;
+          }
+        });
+        chart.line().position('day*value');
+        chart.point().position('day*value').style({
+          stroke: '#fff',
+          lineWidth: 1
+        });
+        chart.render();
+      },
+
+      renderChart2: function () {
+        var chart = new F2.Chart({
+          id: 'chart02',
+          pixelRatio: window.devicePixelRatio
+        });
+
+        chart.source(Mockdata.line1, {
+          value: {
+            tickCount: 5,
+            min: 0
+          },
+          day: {
+            range: [0.05, 0.95]
+          }
+        });
+        chart.tooltip({
+          showCrosshairs: true,
+          showItemMarker: false,
+          onShow: function onShow(ev) {
+            var items = ev.items;
+            items[0].name = null;
+            items[0].value = '' + items[0].value + 'km';
+          }
+        });
+        chart.axis('day', {});
+        chart.interval().position('day*value');
+
+        chart.render();
+
+      },
+      renderChart3: function () {
+        var map = {
+          '第三方施工': '40%',
+          '占压': '20%',
+          '山体滑坡': '18%',
+          '塌陷': '15%',
+          '破损': '5%',
+          '其他': '2%'
+        };
+        var data = [{
+          name: '第三方施工',
+          percent: 0.4,
+          a: '1'
+        }, {
+          name: '占压',
+          percent: 0.2,
+          a: '1'
+        }, {
+          name: '山体滑坡',
+          percent: 0.18,
+          a: '1'
+        }, {
+          name: '塌陷',
+          percent: 0.15,
+          a: '1'
+        }, {
+          name: '破损',
+          percent: 0.05,
+          a: '1'
+        }, {
+          name: '其他',
+          percent: 0.02,
+          a: '1'
+        }];
+        var chart = new F2.Chart({
+          id: 'chart03',
+          pixelRatio: window.devicePixelRatio
+        });
+        chart.source(data, {
+          percent: {
+            formatter: function formatter(val) {
+              return val * 100 + '%';
+            }
+          }
+        });
+        chart.legend({
+          position: 'right',
+          itemFormatter: function itemFormatter(val) {
+            return val + '  ' + map[val];
+          }
+        });
+        chart.tooltip(false);
+        chart.coord('polar', {
+          transposed: true,
+          radius: 0.85
+        });
+        chart.axis(false);
+        chart.interval().position('a*percent').color('name', ['#1890FF', '#13C2C2', '#2FC25B', '#FACC14',
+          '#F04864', '#8543E0'
+        ]).adjust('stack').style({
+          lineWidth: 1,
+          stroke: '#fff',
+          lineJoin: 'round',
+          lineCap: 'round'
+        }).animate({
+          appear: {
+            duration: 1200,
+            easing: 'bounceOut'
+          }
+        });
+
+        chart.render();
+
+      },
+
+    },
+  });
+</script>
+
+</html>

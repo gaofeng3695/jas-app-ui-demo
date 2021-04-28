@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="../../../lib/mint-ui/style.css">
+  <link rel="stylesheet" href="../../../lib/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../../common/css/jas-main.css">
+</head>
+<style>
+  .footer {
+    color: #666;
+    height: 55px;
+    position: relative;
+  }
+</style>
+
+<body>
+  <div class="_outer-wrapper" v-cloak>
+
+    <!-- <jas-header title="app名称"" :is-return="false"></jas-header> -->
+
+    <div id="content" v-setheight></div>
+
+    <div class="footer">
+      <mt-tabbar v-model="selectedTab">
+        <mt-tab-item :id="tab.name" v-for="tab in tabs">
+          <i style="font-size:24px;" slot="icon" :class="tab.icon" aria-hidden="true"></i>
+          <span>{{tab.name}}</span>
+        </mt-tab-item>
+      </mt-tabbar>
+    </div>
+  </div>
+</body>
+
+<script src="../../../appcan/js/appcan.js"></script>
+<script src="../../../lib/vue/vue.js"></script>
+<script src="../../../lib/mint-ui/index.js"></script>
+<script src="../../../common/js/jas-tools.js"></script>
+<script src="../../../common/components/jas-components.js"></script>
+
+<script>
+  var vm = new Vue({
+    el: '._outer-wrapper',
+    data: function () {
+      return {
+        selectedTab: '首页',
+        isInitResume: false,
+        tabs: [ //
+          {
+            name: '首页',
+            icon: 'fa fa-home',
+            url: 'home02.html',
+          }, {
+            name: '实时监控',
+            icon: 'fa fa-camera',
+            url: 'demo02.html',
+          }, {
+            name: '待办',
+            icon: 'fa fa-list-alt',
+            url: 'demo03.html',
+          }, {
+            name: '数据同步',
+            icon: 'fa fa-globe',
+            url: 'demo04.html',
+          }, {
+            name: '个人中心',
+            icon: 'fa fa-user',
+            url: 'demo05.html',
+          },
+        ],
+      }
+    },
+
+    created: function () {},
+    watch: {
+      selectedTab: function () {
+        this.isAppcanReady && this.openCurrentPage();
+      }
+    },
+    mounted: function () {
+      var that = this;
+      appcan.ready(function () {
+        that.isAppcanReady = true;
+        that.openCurrentPage();
+        //监听返回此页面需要执行的方法
+        appcan.window.on('resume', function () {
+          if (!that.isInitResume) {
+            that.isInitResume = true;
+            return;
+          }
+
+          scriptContent && appcan.window.evaluatePopoverScript('index', that.openCurrentPageId,
+            scriptContent);
+        });
+        //监听退出键
+        that.checkOut();
+      });
+    },
+    methods: {
+      openCurrentPage: function () {
+        var that = this;
+        var src = '';
+        this.tabs.forEach(function (item) {
+          if (item.name === that.selectedTab) {
+            src = item.url;
+            that.openCurrentPageId = src;
+          }
+        });
+
+        var dpRate = window.devicePixelRatio || 1; //适配4.1引擎
+        // var dpRate = 1; //适配4.3引擎
+
+        var top = Math.floor($('#content').offset().top * dpRate);
+        var height = Math.floor($('#content').height() * dpRate);
+        var width = Math.floor($('#content').width() * dpRate);
+
+        if (this[src]) {
+          appcan.window.bringPopoverToFront(src);
+        } else {
+          this[src] = true;
+          appcan.window.openPopover({
+            name: src,
+            dataType: 0,
+            url: src,
+            left: 0,
+            top: top,
+            width: width,
+            height: height,
+          });
+        }
+      },
+      goToLogin: function () {
+        appcan.window.open('login', 'login.html', 0, 16, 0, 0, 0);
+      },
+      checkOut: function () { //退出应用
+        //监听手机物理返回键
+        // appcan.window.monitorKey(0, 1, function (id) { // id:要拦截的键值id,0-返回键，1-菜单键 ;enable:是否拦截,0-不拦截，1-拦截
+        //   var _msg = "您是否要退出app？";
+        //   appcan.window.confirm({
+        //     title: '提示',
+        //     content: _msg,
+        //     buttons: ['确定', '取消'],
+        //     callback: function (err, data, dataType, optId) {
+        //       if (data == 0) {
+        //         uexWidgetOne.exit(0);
+        //       } else {
+        //         window.appcan && appcan.window.close(); // 演示的时候启用此代码 
+        //       }
+        //     }
+        //   });
+        // });
+      }
+    },
+  });
+</script>
+
+</html>
